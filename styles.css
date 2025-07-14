@@ -1,55 +1,65 @@
-body {
-  margin: 0; padding: 0;
-  font-family: 'Lucida Console', monospace;
-  background-color: #f9f9f9;
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Lucida Console, monospace;
   display: flex;
   justify-content: center;
-  padding-top: 40px;
+  align-items: center;
+  background-color: #f0f0f0;
 }
 
 .openinghours {
   border-radius: 4px;
-  max-width: 800px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.25);
-  padding: 20px;
+  margin: 10px;
+  box-shadow: 0 0 10px black;
+  padding: 20px 30px;
   background: white;
+  width: 90vw;
+  max-width: 600px;
 }
 
 .openinghourscontent h2 {
   text-align: center;
-  margin: 0;
+  margin-top: 0;
+  margin-bottom: 15px;
 }
-
-#open-status {
-  display: block;
-  text-align: center;
-  border: dotted lightgrey 3px;
-  padding: 10px;
-  margin: 10px auto;
-  max-width: 300px;
-  font-size: 1.5em;
-}
-
-.openorclosed.open::after { content: " ÅBEN"; color: green; }
-.openorclosed.closed::after { content: " LUKKET"; color: red; }
 
 .opening-hours-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 10px;
 }
 
-.opening-hours-table td {
-  padding: 10px;
+.opening-hours-table tr td {
+  padding: 8px 10px;
 }
 
-.opening-hours-table tr.today td {
+.opening-hours-table tr td:first-child {
+  font-weight: normal;
+  font-size: 1rem;
+}
+
+.today td {
   font-weight: bold;
-  font-size: 1.25em;
+  font-size: 1.25rem;
 }
 
-.closed-static {
-  font-weight: bold;
-  color: red;
+#open-status {
+  display: block;
+  margin: 15px auto 20px auto;
   text-align: center;
+  border: dotted lightgrey 3px;
+  padding: 10px 0;
+  font-weight: bold;
+  font-size: 1.5rem;
+  width: 50%;
+  border-radius: 6px;
+  background-color: #fafafa;
+}
+
+.open {
+  color: green;
+}
+
+.closed {
+  color: red;
 }
