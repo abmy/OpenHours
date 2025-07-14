@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="da">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Butikkens Åbningstider</title>
-  <link rel="stylesheet" href="styles.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.4/tabletop.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Åbningstider</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tabletop@1.6.0/src/tabletop.min.js"></script>
 </head>
 <body>
   <section class="openinghours">
@@ -14,21 +15,52 @@
         <h2>Åbningstider</h2>
         <span id="open-status"><small class="openorclosed">Butikken er</small></span>
       </div>
-
       <table class="opening-hours-table">
-        <tbody>
-          <tr id="Mandag"><td>Mandag</td><td class="opens"></td><td>-</td><td class="closes"></td></tr>
-          <tr id="Tirsdag"><td>Tirsdag</td><td class="opens"></td><td>-</td><td class="closes"></td></tr>
-          <tr id="Onsdag"><td>Onsdag</td><td class="opens"></td><td>-</td><td class="closes"></td></tr>
-          <tr id="Torsdag"><td>Torsdag</td><td class="opens"></td><td>-</td><td class="closes"></td></tr>
-          <tr id="Fredag"><td>Fredag</td><td class="opens"></td><td>-</td><td class="closes"></td></tr>
-          <tr id="Lørdag"><td>Lørdag</td><td class="opens"></td><td>-</td><td class="closes"></td></tr>
-          <tr id="Søndag"><td>Søndag</td><td colspan="3" class="closed-static">Lukket</td></tr>
-        </tbody>
+        <tr id="Mandag" itemprop="openingHours" title="Åben Mandag">
+          <td>Mandag</td>
+          <td class="opens">--:--</td>
+          <td>-</td>
+          <td class="closes">--:--</td>
+        </tr>
+        <tr id="Tirsdag" itemprop="openingHours" title="Åben Tirsdag">
+          <td>Tirsdag</td>
+          <td class="opens">--:--</td>
+          <td>-</td>
+          <td class="closes">--:--</td>
+        </tr>
+        <tr id="Onsdag" itemprop="openingHours" title="Åben Onsdag">
+          <td>Onsdag</td>
+          <td class="opens">--:--</td>
+          <td>-</td>
+          <td class="closes">--:--</td>
+        </tr>
+        <tr id="Torsdag" itemprop="openingHours" title="Åben Torsdag">
+          <td>Torsdag</td>
+          <td class="opens">--:--</td>
+          <td>-</td>
+          <td class="closes">--:--</td>
+        </tr>
+        <tr id="Fredag" itemprop="openingHours" title="Åben Fredag">
+          <td>Fredag</td>
+          <td class="opens">--:--</td>
+          <td>-</td>
+          <td class="closes">--:--</td>
+        </tr>
+        <tr id="Lørdag" itemprop="openingHours" title="Åben Lørdag">
+          <td>Lørdag</td>
+          <td class="opens">--:--</td>
+          <td>-</td>
+          <td class="closes">--:--</td>
+        </tr>
+        <tr id="Søndag" itemprop="openingHours" title="Åben Søndag">
+          <td>Søndag</td>
+          <td class="opens">--:--</td>
+          <td>-</td>
+          <td class="closes">--:--</td>
+        </tr>
       </table>
     </div>
   </section>
-
   <script src="script.js"></script>
 </body>
 </html>
