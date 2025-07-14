@@ -1,43 +1,74 @@
-const publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1VqklVQ7OUa-mVv03hJ4uUJy70T_sQbLId2srYDuDi2A/pubhtml';
+const publishedSheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRVvbF5YmqLpt2sEfUqgdFzPzzhdzNv-CC5BMjVmtgnParsaoyKFvumO7OylsleumOnYSQyZOr1sm2-/pubhtml';
 
-function init() {
-  Tabletop.init({
-    key: publicSpreadsheetUrl,
-    callback: showInfo,
-    simpleSheet: true
-  });
-}
-
-function showInfo(data) {
-  const now = new Date();
-  const days = ["Søndag", "Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag"];
-  const currentDay = days[now.getDay()];
-  const currentTime = now.getHours() * 100 + now.getMinutes();
-
+function updateOpeningHours(data) {
+  // Update table with sheet data
   data.forEach(row => {
-    const day = row.Day;
-    const open = row.Open.trim();
-    const close = row.Close.trim();
-    const rowEl = document.getElementById(day);
-    if (!rowEl) return;
-
-    if (open.toLowerCase() === 'lukket' || close.toLowerCase() === 'lukket') {
-      rowEl.innerHTML = `<td>${day}</td><td colspan="3" class="closed-static">Lukket</td>`;
-      if (day === currentDay) document.querySelector('.openorclosed').classList.add('closed');
-      return;
-    }
-
-    rowEl.querySelector('.opens').textContent = open;
-    rowEl.querySelector('.closes').textContent = close;
-
-    if (day === currentDay) {
-      rowEl.classList.add('today');
-      const openTime = parseInt(open.replace(':', ''));
-      const closeTime = parseInt(close.replace(':', ''));
-      const statusEl = document.querySelector('.openorclosed');
-      statusEl.classList.add(currentTime >= openTime && currentTime < closeTime ? 'open' : 'closed');
-    }
+    const dayRow = document.getElementById(row.Day);
+    if (!dayRow) return;
+    dayRow.querySelector('.opens').textContent = row.Open || '--:--';
+    dayRow.querySelector('.closes').textContent = row.Close || '--:--';
   });
+
+  highlightToday();
+  updateOpenStatus();
 }
 
-window.addEventListener('DOMContentLoaded', init);
+function highlightToday() {
+  const weekday = ['Søndag','Mandag','Tirsdag','Onsdag','Torsdag','Fredag','Lørdag'];
+  const now = new Date();
+  const today = weekday[now.getDay()];
+
+  // Remove previous highlight
+  document.querySelectorAll('.today').forEach(row => row.classList.remove('today'));
+
+  // Highlight today row
+  const todayRow = document.getElementById(today);
+  if (todayRow) {
+    todayRow.classList.add('today');
+  }
+}
+
+function updateOpenStatus() {
+  const weekday = ['Søndag','Mandag','Tirsdag','Onsdag','Torsdag','Fredag','Lørdag'];
+  const now = new Date();
+  const today = weekday[now.getDay()];
+  const todayRow = document.getElementById(today);
+
+  if (!todayRow) return;
+
+  const openText = todayRow.querySelector('.opens').textContent;
+  const closeText = todayRow.querySelector('.closes').textContent;
+
+  const statusElem = document.querySelector('.openorclosed');
+
+  if (openText.toLowerCase() === 'lukket' || openText === '--:--' || closeText === '--:--') {
+    statusElem.textContent = 'Butikken er lukket';
+    statusElem.classList.remove('open');
+    statusElem.classList.add('closed');
+    return;
+  }
+
+  const nowMinutes = now.getHours() * 60 + now.getMinutes();
+
+  const [openHour, openMin] = openText.split(':').map(Number);
+  const [closeHour, closeMin] = closeText.split(':').map(Number);
+
+  const openMinutes = openHour * 60 + openMin;
+  const closeMinutes = closeHour * 60 + closeMin;
+
+  if (nowMinutes >= openMinutes && nowMinutes <= closeMinutes) {
+    statusElem.textContent = 'Butikken er åben';
+    statusElem.classList.remove('closed');
+    statusElem.classList.add('open');
+  } else {
+    statusElem.textContent = 'Butikken er lukket';
+    statusElem.classList.remove('open');
+    statusElem.classList.add('closed');
+  }
+}
+
+Tabletop.init({
+  key: publishedSheetURL,
+  callback: updateOpeningHours,
+  simpleSheet: true
+});
